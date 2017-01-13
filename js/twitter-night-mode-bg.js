@@ -1,9 +1,6 @@
 var c = chrome || browser;
 var regex = /https:\/\/twitter\.com\/(.*)/;
 
-// a small survey to know why people uninstall
-c.runtime.setUninstallURL('https://goo.gl/forms/tEOXKxPjYpHsgoOj1');
-
 c.pageAction.onClicked.addListener(function(tab) {
   c.storage.local.get({'nightmode': true}, function(items) {
     if(items.nightmode) {
@@ -45,19 +42,3 @@ c.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     c.pageAction.setTitle({tabId: tab.id, title: 'Extension will be enabled when you open twitter.com'});
   }
 });
-
-(function() {
-  // Google Analytics
-  // doing it this way because Firefox doesn't allow usage of analytics.js in add-ons as it is harder
-  // to review
-  var GA_CLIENT_ID = '2012677518.1471589175';
-  var GA_TRACKING_ID = 'UA-82144226-2';
-
-  var xhr = new XMLHttpRequest();
-  var message =
-    "v=1&tid=" + GA_TRACKING_ID + "&cid= " + GA_CLIENT_ID +
-    "&ds=add-on&t=event&ec=AAA";
-
-  xhr.open("POST", "https://www.google-analytics.com/collect", true);
-  xhr.send(message);
-})();
